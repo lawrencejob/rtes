@@ -81,8 +81,13 @@ void homeScreen(void) {
 }
 
 void menu_chooseBrightness(void) {
+	unsigned char brightness = 0;
 	sendString("BRIGHTNESS SELECT");
-	GPT1_setBrightness((waitForCharInput()-47)*10);
+	brightness = (waitForCharInput()-48)*10;
+
+	sendString("\r\n\t\r\n\tYou chose ");
+	//sendString(brightness);
+	GPT1_setBrightness(brightness);
 }
 
 void menu_chooseAnimation(void) {
