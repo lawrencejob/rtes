@@ -1,8 +1,7 @@
 #include "MAIN.H"
 
 
-char ready_to_transmit = 0;
-
+char ready_to_transmit = 0, input_ready = -1;
 
 void ASC0_vInit(void)
 {
@@ -108,6 +107,7 @@ void ASC0_vSendData(uword uwData)
 
 uword ASC0_uwGetData(void)
 {
+  input_ready = -1;
   return(S0RBUF);     // return receive buffer register
 
 } //  End of function ASC0_uwGetData
@@ -203,7 +203,7 @@ void ASC0_viTxBuf(void) interrupt S0TBINT
 
 } //  End of function ASC0_viTxBuf
 
-extern char ASC0_vReadyToTransmit(void) {
+extern char ASC0_cReadyToTransmit(void) {
 	return ready_to_transmit;
 }
 
@@ -240,6 +240,18 @@ void ASC0_vReceiverOn(void)
 
 } //  End of function ASC0_vReceiverOn
 
+
+
+extern char ASC0_cReadyToReceive(void) {
+	return input_ready;
+}
+
+void ASC0_viRx(void) interrupt S0RINT
+{
+	input_ready = 0;
+	IO_vWritePort(P2, S0RBUF);
+
+} //  End of function ASC0_viRx
 
 
 

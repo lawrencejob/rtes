@@ -116,7 +116,8 @@ void ASC0_vReceiverOn(void);
 //****************************************************************************
 
 #define ASC0_vReceiverOff() S0CON_S0REN = 0
-extern char ASC0_vReadyToTransmit(void);
+extern char ASC0_cReadyToTransmit(void);
+extern char ASC0_cReadyToReceive(void);
 
 
 //****************************************************************************

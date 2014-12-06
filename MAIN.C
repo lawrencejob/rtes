@@ -6,6 +6,7 @@
 
 
 void homeScreen(void);
+int waitForCharInput(void);
 
 void MAIN_vInit(void)
 {
@@ -40,105 +41,84 @@ void main(void)
 	IO_vWritePort(P2, 0x0F55);
 	ASC0_vReceiverOn();
 	while(1) {
-		/*ASC0_vSendData('e');
-		IO_vWritePort(P2, 0xF077);
-		for(i=0; i<0xFFFF; i++){}
-		IO_vWritePort(P2, 0xF055);
-		for(i=0; i<0xFFFF; i++){}*/
+
 		homeScreen();
 	}
-	/*char *test="tB9";
-	
-	int index=0;
-	
-	unsigned int store;
-	
-	MAIN_vInit();
-	IO_vWritePort(P2, 0x0F);
-	ASC0_vReceiverOn();
-	
-	while(1)
-	
-	{
-	
-		
-		while(ASC0_ubRxDataReady() == 0) {} //loop till the reciever is ready
-		
-		ASC0_vReceiverOn();
-		
-		IO_vWritePort(P2, 0x7575);
-		
-		store=ASC0_uwGetData();
-		
-		IO_vWritePort(P2, store);
-		
-		//*comp[index]=store;
-		
-		ASC0_vReceiverOff();
-		
-		if(store==0x0061) //checks the recieved data
-		
-		{
-		
-			while(ASC0_ubTxBufFree() == 0){} //Loop till the buffer is ready
-		
-			IO_vWritePort(P2, 0x5555);
-			
-			ASC0_vSendData(test[index]);
-			
-		}
-		
-		else
-		
-		{
-							   
-			while(ASC0_ubTxBufFree() == 0){}
-			
-			ASC0_vSendData(test[2]);
-		
-		}
-	
-	}
-	  */
+
 
 } // End of function main
 
 void sendString(char *msg);
+void menu_chooseBrightness(void);
+void menu_chooseAnimation(void);
+void resetEmulator(void);
 char transmitBuffer[1023];
 
 void homeScreen(void) {
 
-	char choice;
-
-	const char *message = "\r\n\tWelcome to Light'o'matic 2000. Prepare for the most gripping PWM\r\n\texperience of your life.Prepare to have your tiny, \r\n\tinsignficant mind blown.\r\n\r\n\tA\tChoose brightness\r\n\tB\tChoose animation\r\n\t\r\n\t";
-
+	int choice;
+	
+	const char *message = "\r\n\tWelcome to Light'o'matic 2000. Prepare for the most gripping PWM\r\n\texperience of your life.Prepare to have your mind blown.\r\n\r\n\tA\tChoose brightness\r\n\tB\tChoose animation\r\n\t\r\n\t";
+	
 	sendString(message);
 	choice = waitForCharInput();
-	while(1){}
+	
+	resetEmulator();
+
+	switch(choice) {
+	 	case 'a':
+		case 'A':
+			menu_chooseBrightness();
+		break;
+		case 'b':
+		case 'B':
+			menu_chooseAnimation();
+		break;
+	}
+
+	sendString("\r\n\t\r\n\t");
+
+}
+
+void menu_chooseBrightness(void) {
+	int i;
+	sendString("BRIGHTNESS SELECT");
+	for(i=0;i<0xFFFF;i++){;;;;;;;;;;;;;;;;;;;}
+}
+
+void menu_chooseAnimation(void) {
+	int i;
+	sendString("ANIMATION SELECT");
+	for(i=0;i<0xFFFF;i++){;;;;}
+}
+
+void resetEmulator(void) {
+	sendString("\r\n\t\r\n\t");
+	while(ASC0_cReadyToTransmit() == -1){}
+	ASC0_vSendData(27);
+	sendString("[2J");
+	while(ASC0_cReadyToTransmit() == -1){}
+	ASC0_vSendData(27);
+	sendString("[H");
 }
 
 void sendString(char *msg) {
 	unsigned char oi;
 	for(oi = 0;oi<strlen(msg);oi++) {
-		while(ASC0_vReadyToTransmit() == -1){}
+		while(ASC0_cReadyToTransmit() == -1){}
 		ASC0_vSendData(msg[oi]);		
 	}
 }
 
-char waitForCharInput() {
-	char in;
-
+int waitForCharInput(void) {
+	int in;
+	while(ASC0_cReadyToReceive() == -1) {}
+	ASC0_vSendData('x');
+	in = ASC0_uwGetData();
+	IO_vWritePort(P2, 0xFFFF);
+	
 	return in;
 }
 
-char input_ready = -1;
-
-char 
-
-void ASC0_viRx(void) interrupt S0RINT
-{
-	IO_vWritePort(P2, ASC0_uwGetData());
-
-} //  End of function ASC0_viRx
 
 
