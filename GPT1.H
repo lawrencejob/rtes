@@ -130,6 +130,8 @@ void GPT1_vInit(void);
 
 #define GPT1_vLoadTmr(TimerNr, Value) TimerNr = Value
 
+extern void GPT1_setBrightness(unsigned char brightness_in);
+
 
 //****************************************************************************
 // @Interrupt Vectors

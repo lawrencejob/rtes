@@ -186,47 +186,32 @@ void GPT1_vInit(void)
 
   T2CON_T2R      =  1;           // timer 2 run bit is set
 
-} //  End of function GPT1_vInit
+} 
 
 
-//****************************************************************************
-// @Function      void GPT1_viTmr2(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the interrupt service routine for the GPT1 timer 2. 
-//                It is called up in the case of over or underflow of the 
-//                timer 2 register.
-//                
-//                Please note that you have to add application specific code 
-//                to this function.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
+unsigned int leds; //16 bits on C167
+unsigned char LED_ITERATOR = 0;
+unsigned char brightness = 0;
+unsigned int counter = 0;
 
-// USER CODE BEGIN (Tmr2,1)
+extern void GPT1_setBrightness(unsigned char brightness_in) {
+	brightness = brightness_in;
+}
 
-// USER CODE END
+void GPT1_viTmr2(void) interrupt T2INT 	{
+	
+	//LED_ITERATOR++;
+	if(LED_ITERATOR++ > 99){
+		LED_ITERATOR = 0;
+		/*counter++;
+		if(counter > 100){
+		 	counter = 0;
+			/*brightness++;
+			if(brightness > 10) brightness = 0;
+		}*/
+	}
 
-void GPT1_viTmr2(void) interrupt T2INT
-{
-  // USER CODE BEGIN (Tmr2,2)
+	IO_vWritePort(P2, (LED_ITERATOR>brightness)?(0xFFFF):(0x0F0F));
+	GPT1_TIMER_2 = 0x1;
 
-  // USER CODE END
-
-} //  End of function GPT1_viTmr2
-
-
-
-
-// USER CODE BEGIN (GPT1_General,10)
-
-// USER CODE END
-
+}

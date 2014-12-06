@@ -81,15 +81,12 @@ void homeScreen(void) {
 }
 
 void menu_chooseBrightness(void) {
-	int i;
 	sendString("BRIGHTNESS SELECT");
-	for(i=0;i<0xFFFF;i++){;;;;;;;;;;;;;;;;;;;}
+	GPT1_setBrightness((waitForCharInput()-47)*10);
 }
 
 void menu_chooseAnimation(void) {
-	int i;
 	sendString("ANIMATION SELECT");
-	for(i=0;i<0xFFFF;i++){;;;;}
 }
 
 void resetEmulator(void) {
