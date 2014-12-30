@@ -1,7 +1,7 @@
 //****************************************************************************
 // @Module        Parallel Ports
 // @Filename      IO.C
-// @Project       FullLab.dav
+// @Project       project.dav
 //----------------------------------------------------------------------------
 // @Controller    Infineon C167CS-L
 //
@@ -12,7 +12,7 @@
 // @Description   This file contains functions that use the IO module.
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014 16:17:25
+// @Date          30/12/2014 13:29:10
 //
 //****************************************************************************
 
@@ -122,7 +122,7 @@
 // @Parameters    None
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014
+// @Date          30/12/2014
 //
 //****************************************************************************
 
@@ -203,7 +203,24 @@ void IO_vInit(void)
   ///  -----------------------------------------------------------------------
   ///  Configuration of Port P1H:
   ///  -----------------------------------------------------------------------
-  ///  - no pin of port P1H is used
+  ///  P1H.0 is used as alternate output for the Port Pin (A8)
+  ///  P1H.1 is used as alternate output for the Port Pin (A9)
+  ///  P1H.2 is used as alternate output for the Port Pin (A10)
+  ///  P1H.3 is used as alternate output for the Port Pin (A11)
+  ///  P1H.4 is used as alternate output for the Port Pin (A12)
+  ///  P1H.5 is used as alternate output for the Port Pin (A13)
+  ///  P1H.6 is used as alternate output for the Port Pin (A14)
+  ///  P1H.7 is used as alternate output for the Port Pin (A15)
+
+  ///  P1H.0 - P1H.3 output driver characteristic: high current mode
+  ///  P1H.4 - P1H.7 output driver characteristic: high current mode
+  ///  P1H.8 - P1H.11 output driver characteristic: high current mode
+  ///  P1H.12 - P1H.15 output driver characteristic: high current mode
+
+  ///  P1H.0 - P1H.3 output edge characteristic: normal timing
+  ///  P1H.4 - P1H.7 output edge characteristic: normal timing
+  ///  P1H.8 - P1H.11 output edge characteristic: normal timing
+  ///  P1H.12 - P1H.15 output edge characteristic: normal timing
 
   P1H            =  0x0000;      // load data register
   POCON1H        =  0x0000;      // load output control register
@@ -212,7 +229,24 @@ void IO_vInit(void)
   ///  -----------------------------------------------------------------------
   ///  Configuration of Port P1L:
   ///  -----------------------------------------------------------------------
-  ///  - no pin of port P1L is used
+  ///  P1L.0 is used as alternate output for the Port Pin (A0)
+  ///  P1L.1 is used as alternate output for the Port Pin (A1)
+  ///  P1L.2 is used as alternate output for the Port Pin (A2)
+  ///  P1L.3 is used as alternate output for the Port Pin (A3)
+  ///  P1L.4 is used as alternate output for the Port Pin (A4)
+  ///  P1L.5 is used as alternate output for the Port Pin (A5)
+  ///  P1L.6 is used as alternate output for the Port Pin (A6)
+  ///  P1L.7 is used as alternate output for the Port Pin (A7)
+
+  ///  P1L.0 - P1L.3 output driver characteristic: high current mode
+  ///  P1L.4 - P1L.7 output driver characteristic: high current mode
+  ///  P1L.8 - P1L.11 output driver characteristic: high current mode
+  ///  P1L.12 - P1L.15 output driver characteristic: high current mode
+
+  ///  P1L.0 - P1L.3 output edge characteristic: normal timing
+  ///  P1L.4 - P1L.7 output edge characteristic: normal timing
+  ///  P1L.8 - P1L.11 output edge characteristic: normal timing
+  ///  P1L.12 - P1L.15 output edge characteristic: normal timing
 
   P1L            =  0x0000;      // load data register
   POCON1L        =  0x0000;      // load output control register
@@ -321,6 +355,10 @@ void IO_vInit(void)
   ///  -----------------------------------------------------------------------
   ///  P4.0 is used as alternate input for the Port Pin (A16)
   ///  P4.1 is used as alternate input for the Port Pin (A17)
+  ///  P4.5 is used as alternate input for the CAN1 Interface Input (CAN1_RxD)
+  ///  P4.6 is used as alternate output for the CAN1 Interface Output 
+  ///  (CAN1_TxD)
+  ///  - push/pull output is selected
 
   ///  P4.0 - P4.3 output driver characteristic: high current mode
   ///  P4.4 - P4.7 output driver characteristic: high current mode

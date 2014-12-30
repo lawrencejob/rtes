@@ -1,225 +1,287 @@
+//****************************************************************************
+// @Module        Project Settings
+// @Filename      MAIN.C
+// @Project       project.dav
+//----------------------------------------------------------------------------
+// @Controller    Infineon C167CS-L
+//
+// @Compiler      Keil
+//
+// @Codegenerator 2.2
+//
+// @Description   This file contains the project initialization function.
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014 13:29:10
+//
+//****************************************************************************
+
+// USER CODE BEGIN (MAIN_General,1)
+
+// USER CODE END
+
+
+
+//****************************************************************************
+// @Project Includes
+//****************************************************************************
+
 #include "MAIN.H"
-#include "ASC0.H"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+// USER CODE BEGIN (MAIN_General,2)
+
+// USER CODE END
 
 
-void homeScreen(void);
-int waitForCharInput(void);
-void drawBrightnessScreen(void);
-void sendNL(void);
+//****************************************************************************
+// @Macros
+//****************************************************************************
 
-#define BRIGHTNESS_INCREMENT 5
-#define BRIGHTNESS_MAX 100
+// USER CODE BEGIN (MAIN_General,3)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Defines
+//****************************************************************************
+
+// USER CODE BEGIN (MAIN_General,4)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Typedefs
+//****************************************************************************
+
+// USER CODE BEGIN (MAIN_General,5)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Imported Global Variables
+//****************************************************************************
+
+// USER CODE BEGIN (MAIN_General,6)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Global Variables
+//****************************************************************************
+
+// USER CODE BEGIN (MAIN_General,7)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @External Prototypes
+//****************************************************************************
+
+// USER CODE BEGIN (MAIN_General,8)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Prototypes Of Local Functions
+//****************************************************************************
+
+// USER CODE BEGIN (MAIN_General,9)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Function      void MAIN_vInit(void) 
+//
+//----------------------------------------------------------------------------
+// @Description   This function initializes the microcontroller.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   None
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
+
+// USER CODE BEGIN (Init,1)
+
+// USER CODE END
 
 void MAIN_vInit(void)
 {
+  // USER CODE BEGIN (Init,2)
 
+  // USER CODE END
+
+  //// -----------------------------------------------------------------------
+  //// Begin of Important Settings for the Start-Up File
+  //// -----------------------------------------------------------------------
+  ///  All following settings must be set in the start-up file. You can use 
+  ///  DAvE's project file (*.dpt) to include this register values into your 
+  ///  compiler EDE.
+
+    ///  ---------------------------------------------------------------------
+    ///  Initialization of the XPERCON Register:
+    ///  ---------------------------------------------------------------------
+
+    //// this register must be set in the start-up file
+    //// XPERCON  =  0x0401
+
+    ///  ---------------------------------------------------------------------
+    ///  Initialization of the XADRS5 Register:
+    ///  ---------------------------------------------------------------------
+
+    //// this register must be set in the start-up file
+    //// XADRS5  =  0x0080
+
+    ///  ---------------------------------------------------------------------
+    ///  Initialization of the SYSCON Register:
+    ///  ---------------------------------------------------------------------
+    ///  - 256 words system stack
+    ///  - Internal ROM area mapped to segment 1
+    ///  - the segmentation is enabled (CSP is saved/restored during 
+    ///  interrupt entry/exit)
+    ///  - Internal ROM disabled
+    ///  - the pin #BHE is disabled
+    ///  - system clock output CLKOUT is disabled
+    ///  - latched #CS mode
+    ///  - pin #RSTIN is an input only
+    ///  - the on-chip X-Peripherals are enabled and can be accessed
+    ///  - accesses to the XBUS peripherals are done internally
+    ///  - external accesses to XBUS peripherals are disabled
+
+    //// this register must be set in the start-up file
+    //// SYSCON  =  0x1214
+
+    ///  ---------------------------------------------------------------------
+    ///  Initialization of the SYSCON1 Register:
+    ///  ---------------------------------------------------------------------
+
+    //// this register must be set in the start-up file
+    //// SYSCON1  =  0x0000
+
+    ///  ---------------------------------------------------------------------
+    ///  Initialization of the SYSCON2 Register:
+    ///  ---------------------------------------------------------------------
+
+    //// this register must be set in the start-up file
+    //// SYSCON2  =  0x0000
+
+    ///  ---------------------------------------------------------------------
+    ///  Initialization of the SYSCON3 Register:
+    ///  ---------------------------------------------------------------------
+
+    //// this register must be set in the start-up file
+    //// SYSCON3  =  0x4000
+
+    ///  ---------------------------------------------------------------------
+    ///  --- initialization of the BUSCON 0-4 and ADRRSEL Registers 1-4 ---
+    ///  ---------------------------------------------------------------------
+
+
+    ///  ---------------------------------------------------------------------
+    ///  ---------- external bus 0 is enabled ----------
+    ///  ---------------------------------------------------------------------
+    ///  - 16-bit Demultiplexed Bus
+    ///  - signal configuration: disable READY signal
+    ///  - memory cycle time control: 15 waitstates
+    ///  - With read/write delay: activate command 1 TCL after falling edge 
+    ///  of ALE
+    ///  - chip select mode: address chip select
+    ///  - memory tristate control: 1 waitstate
+    ///  - ALE lengthening control: lengthened ALE signal
+    ///  - Address windows are switched immediately
+    ///  - Normal #WR signal
+
+    //// this register must be set in the start-up file
+    //// BUSCON0  =  0x0680
+
+
+
+
+  //// -----------------------------------------------------------------------
+  //// End of Important Settings for the Start-Up File
+  //// -----------------------------------------------------------------------
+
+
+  ///  external bus arbitration is disabled, P6.7...P6.5 may be used for 
+  ///  general purpose I/O
+
+
+  //   -----------------------------------------------------------------------
+  //   Initialization of the Peripherals:
+  //   -----------------------------------------------------------------------
 
   //   initializes the Parallel Ports
   IO_vInit();
 
   //   initializes the Asynchronous/Synchronous Serial Interface (ASC0)
-  ASC0_vInit();			  
+  ASC0_vInit();
 
   //   initializes the General Purpose Timer Unit (GPT1)
   GPT1_vInit();
 
+  //   initializes the On-Chip CAN Interface 1 (CAN1)
+  CAN1_vInit();
 
-  //   initializes the General Purpose Timer Unit (GPT1)
-  //GPT1_vInit();
+  // USER CODE BEGIN (Init,3)
+
+  // USER CODE END
+
   //   globally enable interrupts
   PSW_IEN        =  1;          
-
 
 } //  End of function MAIN_vInit
 
 
+//****************************************************************************
+// @Function      void main(void) 
+//
+//----------------------------------------------------------------------------
+// @Description   This is the main function.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   None
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
 
+// USER CODE BEGIN (Main,1)
+
+// USER CODE END
 
 void main(void)
-
 {
-	int i = 0;
-	MAIN_vInit();
-	IO_vWritePort(P2, 0x0F55);
-	ASC0_vReceiverOn();
-	while(1) {
+  // USER CODE BEGIN (Main,2)
 
-		homeScreen();
-	}
+  // USER CODE END
+
+  MAIN_vInit();
+
+  // USER CODE BEGIN (Main,4)
+
+  // USER CODE END
+
+} //  End of function main
 
 
-} // End of function main
 
-void sendString(char *msg);
-void menu_chooseBrightness(void);
-void menu_chooseAnimation(void);
-void resetEmulator(void);
-int waitForDirectionInput(void);
-void setColour(char foreground, char background);
-char transmitBuffer[1023];
+// USER CODE BEGIN (MAIN_General,10)
 
-void homeScreen(void) {
-
-	int choice;
-	
-	const char *message = "\r\n\tWelcome to Light'o'matic 2000. Prepare for the most gripping PWM\r\n\texperience of your life.Prepare to have your mind blown.\r\n\r\n\tA\tChoose brightness\r\n\tB\tChoose animation\r\n\t\r\n\t";
-	
-	resetEmulator();
-
-	sendNL();
-	sendString(message);
-	choice = waitForCharInput();
-	
-	resetEmulator();
-
-	switch(choice) {
-	 	case 'a':
-		case 'A':
-			menu_chooseBrightness();
-		break;
-		case 'b':
-		case 'B':
-			menu_chooseAnimation();
-		break;
-	}
-
-	sendString("\r\n\t\r\n\t");
-
-}
-
-void menu_chooseBrightness(void) {
-	unsigned char brightness = 0, loop_break = 0;
-	int direction = 0;
-	/*sendString("BRIGHTNESS SELECT");
-	brightness = (waitForCharInput()-48)*10;
-
-	sendString("\r\n\t\r\n\tYou chose ");
-	//sendString(brightness);
-	GPT1_setBrightness(brightness);*/
-	
-	resetEmulator();
-	//setColour(6, 7);
-
-	sendNL();
-	sendString("BRIGHTNESS SELECT:");
-
-	sendNL();
-	sendString("Use the arrow keys to select the brightness you want.");
-
-	sendNL();
-	sendString("Press enter when you're done.");
-	
-	sendNL();
-	sendNL();
-
-	while(loop_break==0){
-		drawBrightnessScreen();
-		direction = waitForDirectionInput();
-		switch(direction) {
-			case 'C':
-			case 'c':
-				loop_break = 0;
-				if(GPT1_getBrightness()+5 <= BRIGHTNESS_MAX)
-					GPT1_setBrightness(GPT1_getBrightness()+BRIGHTNESS_INCREMENT);
-			break;
-			case 'D':
-			case 'd':
-				loop_break = 0;
-				if(GPT1_getBrightness() >= BRIGHTNESS_INCREMENT)
-					GPT1_setBrightness(GPT1_getBrightness() - BRIGHTNESS_INCREMENT);
-			break;
-			default:
-				loop_break = -1;
-				return;
-			break;
-		}
-	}
-}
-
-void drawBrightnessScreen(void) {
-	unsigned char c;
-	char percentage[3];
-
-	ASC0_vSendData(0xD);
-	sendString("\t");
-
-	sendString("[ ");
-	for (c=0; c<GPT1_getBrightness(); c+=BRIGHTNESS_INCREMENT){
-		sendString("=");
-	}
-	for(c=BRIGHTNESS_MAX; c>GPT1_getBrightness(); c-= BRIGHTNESS_INCREMENT) {
-	 	sendString(" ");
-	}
-	sendString(" ] ");
-
-	sprintf(percentage, "%d", GPT1_getBrightness());
-	sendString(percentage);
-	sendString("% ");
-
-	
-	return;
-}
-
-void menu_chooseAnimation(void) {
-	sendString("ANIMATION SELECT");
-}
-
-void setColour(char foreground, char background){
-	ASC0_vSendData(27);
-	sendString("[3");
-	ASC0_vSendData(foreground);
-	ASC0_vSendData(27);
-	sendString("[4");
-	ASC0_vSendData(background);
-
-}
-
-void resetEmulator(void) {
-	sendString("\r\n\t\r\n\t");
-	while(ASC0_cReadyToTransmit() == -1){}
-	ASC0_vSendData(27);
-	sendString("[2J");
-	while(ASC0_cReadyToTransmit() == -1){}
-	ASC0_vSendData(27);
-	sendString("[H");
-
-	/*sendNL();
-	sendString("---------------");
-	sendNL();*/
-}
-
-void sendString(char *msg) {
-	unsigned char oi;
-	for(oi = 0;oi<strlen(msg);oi++) {
-		while(ASC0_cReadyToTransmit() == -1){}
-		ASC0_vSendData(msg[oi]);		
-	}
-}
-
-void sendNL(void) {
-	sendString("\r\n\t");
-}
-
-int waitForCharInput(void) {
-	int in;
-	while(ASC0_cReadyToReceive() == -1) {}
-	//ASC0_vSendData('x');
-	in = ASC0_uwGetData();
-	IO_vWritePort(P2, 0xFFFF);
-	
-	return in;
-}
-
-int waitForDirectionInput(void) {
-	int in;
-	char loop_break = 0;
-	while(loop_break == 0){
-		in = waitForCharInput();
-		if(in == 'A' || in == 'B' || in == 'C' || in == 'D' || in == 0xD || in == 0xA) return in;
-	}
-	return in;
-}
+// USER CODE END
 

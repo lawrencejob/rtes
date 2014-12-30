@@ -1,7 +1,123 @@
+//****************************************************************************
+// @Module        Asynchronous/Synchronous Serial Interface (ASC0)
+// @Filename      ASC0.C
+// @Project       project.dav
+//----------------------------------------------------------------------------
+// @Controller    Infineon C167CS-L
+//
+// @Compiler      Keil
+//
+// @Codegenerator 2.2
+//
+// @Description   This file contains functions that use the ASC0 module.
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014 13:29:10
+//
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,1)
+
+// USER CODE END
+
+
+
+//****************************************************************************
+// @Project Includes
+//****************************************************************************
+
 #include "MAIN.H"
 
+// USER CODE BEGIN (ASC0_General,2)
 
-char ready_to_transmit = 0, input_ready = -1;
+// USER CODE END
+
+
+//****************************************************************************
+// @Macros
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,3)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Defines
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,4)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Typedefs
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,5)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Imported Global Variables
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,6)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Global Variables
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,7)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @External Prototypes
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,8)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Prototypes Of Local Functions
+//****************************************************************************
+
+// USER CODE BEGIN (ASC0_General,9)
+
+// USER CODE END
+
+
+//****************************************************************************
+// @Function      void ASC0_vInit(void) 
+//
+//----------------------------------------------------------------------------
+// @Description   This is the initialization function of the ASC0 function 
+//                library. It is assumed that the SFRs used by this library 
+//                are in its reset state. 
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   None
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
+
+// USER CODE BEGIN (Init,1)
+
+// USER CODE END
 
 void ASC0_vInit(void)
 {
@@ -23,7 +139,6 @@ void ASC0_vInit(void)
   ///  Configuration of the ASC0 Operation Mode:
   ///  -----------------------------------------------------------------------
   ///  - 8-bit data asychronous operation width one stop bit
-  ///  - loopback mode is enabled
   ///  - receiver is enabled
 
   S0CON          =  0x0011;      // load ASC0 control register
@@ -40,24 +155,14 @@ void ASC0_vInit(void)
   ///  -----------------------------------------------------------------------
   ///  Configuration of the used ASC0 Interrupts:
   ///  -----------------------------------------------------------------------
-  ///  - transmit service request node configuration:
-  ///  - transmit interrupt priority level (ILVL) = 7
-  ///  - transmit interrupt group level (GLVL) = 1
 
-  S0TIC          =  0x005D;     
-
-  ///  - transmit buffer service request node configuration:
-  ///  - transmit buffer interrupt priority level (ILVL) = 8
-  ///  - transmit buffer interrupt group level (GLVL) = 1
-
-  S0TBIC         =  0x0061;     
-
-  ///  - receive service request node configuration:
-  ///  - receive interrupt priority level (ILVL) = 9
-  ///  - receive interrupt group level (GLVL) = 1
-
-  S0RIC          =  0x0065;     
-
+  //   -----------------------------------------------------------------------
+  //   Default Settings for Service Request Flags:
+  //   -----------------------------------------------------------------------
+  S0TBIC_S0TBIR  =  1;           // indicates that the transmit buffer is 
+                                 // empty
+  S0TIC_S0TIR    =  1;           // indicates that the transmit register is 
+                                 // empty
 
   // USER CODE BEGIN (ASC0_Function,3)
 
@@ -89,7 +194,7 @@ void ASC0_vInit(void)
 //                Data to be send
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014
+// @Date          30/12/2014
 //
 //****************************************************************************
 
@@ -99,113 +204,82 @@ void ASC0_vInit(void)
 
 void ASC0_vSendData(uword uwData)
 {
-	ready_to_transmit = -1;
-	S0TBUF  = uwData;   //  load transmit buffer register
+  S0TBIC_S0TBIR = 0;         //  reset transmit buffer interrupt request flag
+  S0TBUF  = uwData;   //  load transmit buffer register
 
 } //  End of function ASC0_vSendData
 
 
+//****************************************************************************
+// @Function      uword ASC0_uwGetData(void) 
+//
+//----------------------------------------------------------------------------
+// @Description   This function reads out the content of the S0RBUF register 
+//                which contains a received data byte.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   data that has been received
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
+
+// USER CODE BEGIN (GetData,1)
+
+// USER CODE END
+
 uword ASC0_uwGetData(void)
 {
-  input_ready = -1;
+  S0RIC_S0RIR = 0;          // reset receive interrupt request flag
   return(S0RBUF);     // return receive buffer register
 
 } //  End of function ASC0_uwGetData
 
 
 //****************************************************************************
-// @Function      void ASC0_viTx(void) 
+// @Function      ubyte ASC0_ubTxDataReady(void) 
 //
 //----------------------------------------------------------------------------
-// @Description   This is the transmit interrupt service routine for the 
-//                ASC0. It is called when the sending of data is terminated 
-//                (S0TIR is set). 
-//                Please note that you have to add application specific code 
-//                to this function.
+// @Description   This function can be used for checking up the status of the 
+//                ASC0 transmitter interrupt flags (S0TIR). This shows when 
+//                the sending of a byte has terminated. By continuously 
+//                polling the S0TIR bit after the function ASC0_vSendData has 
+//                been called, it is possible to establish when the ASC0 has 
+//                terminated its task.
 //
 //----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-
-void ASC0_viTx(void) interrupt S0TINT
-{
-
-
-
-} //  End of function ASC0_viTx
-
-
-//****************************************************************************
-// @Function      void ASC0_viRx(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the receive interrupt service routine for the ASC0. 
-//                It is called if a byte has been received via ASC0 (S0RIR is 
-//                set). 
-//                Please note that you have to add application specific code 
-//                to this function.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
+// @Returnvalue   0 if transmitter is busy, else 1
 //
 //----------------------------------------------------------------------------
 // @Parameters    None
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014
+// @Date          30/12/2014
 //
 //****************************************************************************
 
-// USER CODE BEGIN (Rx,1)
+// USER CODE BEGIN (TxDataReady,1)
 
 // USER CODE END
 
-
-
-
-//****************************************************************************
-// @Function      void ASC0_viTxBuf(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the transmit buffer interrupt service routine for 
-//                the ASC0. It is called if the content of the TX-buffer has 
-//                been loaded into the TX-shift register.
-//                Please note that you have to add application specific code 
-//                to this function.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (TxBuf,1)
-
-// USER CODE END
-
-void ASC0_viTxBuf(void) interrupt S0TBINT
+ubyte ASC0_ubTxDataReady(void)
 {
-	ready_to_transmit = 0x00;	
-  
+  ubyte ubReturnValue;
 
-} //  End of function ASC0_viTxBuf
+  ubReturnValue = 0;
 
-extern char ASC0_cReadyToTransmit(void) {
-	return ready_to_transmit;
-}
+  if(S0TIC_S0TIR)         // if sending of data is terminated
+  {
+    ubReturnValue = 1;
+    S0TIC_S0TIR = 0;
+  }
+  return(ubReturnValue);         // return receive buffer register
+
+} //  End of function ASC0_ubTxDataReady
 
 
 //****************************************************************************
@@ -226,7 +300,7 @@ extern char ASC0_cReadyToTransmit(void) {
 // @Parameters    None
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014
+// @Date          30/12/2014
 //
 //****************************************************************************
 
@@ -240,18 +314,6 @@ void ASC0_vReceiverOn(void)
 
 } //  End of function ASC0_vReceiverOn
 
-
-
-extern char ASC0_cReadyToReceive(void) {
-	return input_ready;
-}
-
-void ASC0_viRx(void) interrupt S0RINT
-{
-	input_ready = 0;
-	IO_vWritePort(P2, S0RBUF);
-
-} //  End of function ASC0_viRx
 
 
 

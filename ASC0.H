@@ -1,7 +1,7 @@
 //****************************************************************************
 // @Module        Asynchronous/Synchronous Serial Interface (ASC0)
 // @Filename      ASC0.H
-// @Project       FullLab.dav
+// @Project       project.dav
 //----------------------------------------------------------------------------
 // @Controller    Infineon C167CS-L
 //
@@ -13,7 +13,7 @@
 //                the ASC0 module.
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014 16:17:25
+// @Date          30/12/2014 13:29:10
 //
 //****************************************************************************
 
@@ -87,12 +87,60 @@
 void ASC0_vInit(void);
 void ASC0_vSendData(uword uwData);
 uword ASC0_uwGetData(void);
+ubyte ASC0_ubTxDataReady(void);
 void ASC0_vReceiverOn(void);
 
 
 // USER CODE BEGIN (ASC0_Header,8)
 
 // USER CODE END
+
+
+//****************************************************************************
+// @Macro         ASC0_ubTxBufFree() 
+//
+//----------------------------------------------------------------------------
+// @Description   This macro can be used for checking the status of the 
+//                transmit buffer register (S0TBUF). The TX-Buffer may only 
+//                be written to if it is empty, this implies that the 
+//                previous content of the TX buffer have been loaded into the 
+//                TX-shift register.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   0 if buffer is not empty, else 1
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
+
+#define ASC0_ubTxBufFree() S0TBIC_S0TBIR
+
+
+//****************************************************************************
+// @Macro         ASC0_ubRxDataReady() 
+//
+//----------------------------------------------------------------------------
+// @Description   This macro can be used for calling the status of the ASC0 
+//                receiver interrupt flag (S0RIR). This is to recognize that 
+//                the ASC0 received a byte. If a byte has been received, the 
+//                function ASC0_uwGetData must be called.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   0 receive data is invalid, else 1
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
+
+#define ASC0_ubRxDataReady() S0RIC_S0RIR
 
 
 //****************************************************************************
@@ -111,22 +159,17 @@ void ASC0_vReceiverOn(void);
 // @Parameters    None
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014
+// @Date          30/12/2014
 //
 //****************************************************************************
 
 #define ASC0_vReceiverOff() S0CON_S0REN = 0
-extern char ASC0_cReadyToTransmit(void);
-extern char ASC0_cReadyToReceive(void);
 
 
 //****************************************************************************
 // @Interrupt Vectors
 //****************************************************************************
 
-#define S0TINT    0x2A
-#define S0RINT    0x2B
-#define S0TBINT    0x47
 
 // USER CODE BEGIN (ASC0_Header,9)
 

@@ -1,7 +1,7 @@
 //****************************************************************************
 // @Module        General Purpose Timer Unit (GPT1)
 // @Filename      GPT1.C
-// @Project       FullLab.dav
+// @Project       project.dav
 //----------------------------------------------------------------------------
 // @Controller    Infineon C167CS-L
 //
@@ -12,7 +12,7 @@
 // @Description   This file contains functions that use the GPT1 module.
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014 16:17:25
+// @Date          30/12/2014 13:29:10
 //
 //****************************************************************************
 
@@ -111,7 +111,7 @@
 // @Parameters    None
 //
 //----------------------------------------------------------------------------
-// @Date          05/12/2014
+// @Date          30/12/2014
 //
 //****************************************************************************
 
@@ -145,12 +145,12 @@ void GPT1_vInit(void)
   ///  -----------------------------------------------------------------------
   ///  - timer 2 works in timer mode
   ///  - maximum input frequency for timer 2 is 2.5 MHz
-  ///  - prescaler factor is 512
+  ///  - prescaler factor is 8
   ///  - up/down control bit is set
   ///  - external up/down control is disabled
 
-  T2CON          =  0x0086;      // load timer 2 control register
-  T2             =  0x9896;      // load timer 2 register
+  T2CON          =  0x0080;      // load timer 2 control register
+  T2             =  0x09C3;      // load timer 2 register
 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the GPT1 Core Timer 4:
@@ -158,12 +158,11 @@ void GPT1_vInit(void)
   ///  - timer 4 works in timer mode
   ///  - maximum input frequency for timer 4 is 2.5 MHz
   ///  - prescaler factor is 8
-  ///  - up/down control bit is reset
+  ///  - up/down control bit is set
   ///  - external up/down control is disabled
-  ///  - timer 4 run bit is reset
 
-  T4CON          =  0x0000;      // load timer 4 control register
-  T4             =  0x0000;      // load timer 4 register
+  T4CON          =  0x0080;      // load timer 4 control register
+  T4             =  0xB98B;      // load timer 4 register
 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the used GPT1 Port Pins:
@@ -179,6 +178,12 @@ void GPT1_vInit(void)
 
   T2IC           =  0x006A;     
 
+  ///  - timer 4 service request node configuration:
+  ///  - timer 4 interrupt priority level (ILVL) = 11
+  ///  - timer 4 interrupt group level (GLVL) = 2
+
+  T4IC           =  0x006E;     
+
 
   // USER CODE BEGIN (GPT1_Function,3)
 
@@ -186,32 +191,84 @@ void GPT1_vInit(void)
 
   T2CON_T2R      =  1;           // timer 2 run bit is set
 
-} 
+  T4CON_T4R      =  1;           // timer 4 run bit is set
+
+} //  End of function GPT1_vInit
 
 
-unsigned int leds; //16 bits on C167
-unsigned char LED_ITERATOR = 0;
-unsigned char brightness = 0;
-unsigned int counter = 0;
+//****************************************************************************
+// @Function      void GPT1_viTmr2(void) 
+//
+//----------------------------------------------------------------------------
+// @Description   This is the interrupt service routine for the GPT1 timer 2. 
+//                It is called up in the case of over or underflow of the 
+//                timer 2 register.
+//                
+//                Please note that you have to add application specific code 
+//                to this function.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   None
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
 
-extern void GPT1_setBrightness(unsigned char brightness_in) {
-	brightness = brightness_in;
-}
+// USER CODE BEGIN (Tmr2,1)
 
-void GPT1_viTmr2(void) interrupt T2INT 	{
-	
-	//LED_ITERATOR++;
-	if(LED_ITERATOR++ > 99){
-		LED_ITERATOR = 0;
-		/*counter++;
-		if(counter > 100){
-		 	counter = 0;
-			/*brightness++;
-			if(brightness > 10) brightness = 0;
-		}*/
-	}
+// USER CODE END
 
-	IO_vWritePort(P2, (LED_ITERATOR>brightness)?(0xFFFF):(0x0F0F));
-	GPT1_TIMER_2 = 0x1;
+void GPT1_viTmr2(void) interrupt T2INT
+{
+  // USER CODE BEGIN (Tmr2,2)
 
-}
+  // USER CODE END
+
+} //  End of function GPT1_viTmr2
+
+
+//****************************************************************************
+// @Function      void GPT1_viTmr4(void) 
+//
+//----------------------------------------------------------------------------
+// @Description   This is the interrupt service routine for the GPT1 timer 4. 
+//                It is called up in the case of over or underflow of the 
+//                timer 4 register.
+//                
+//                Please note that you have to add application specific code 
+//                to this function.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   None
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//----------------------------------------------------------------------------
+// @Date          30/12/2014
+//
+//****************************************************************************
+
+// USER CODE BEGIN (Tmr4,1)
+
+// USER CODE END
+
+void GPT1_viTmr4(void) interrupt T4INT
+{
+  // USER CODE BEGIN (Tmr4,2)
+
+  // USER CODE END
+
+} //  End of function GPT1_viTmr4
+
+
+
+
+// USER CODE BEGIN (GPT1_General,10)
+
+// USER CODE END
+
