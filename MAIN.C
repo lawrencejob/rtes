@@ -26,12 +26,12 @@ void MAIN_vInit(void)
   //   initializes the General Purpose Timer Unit (GPT1)
   GPT1_vInit();
 
+  //   initializes the On-Chip CAN Interface 1 (CAN1)
+  CAN1_vInit();
 
-  //   initializes the General Purpose Timer Unit (GPT1)
-  //GPT1_vInit();
+
   //   globally enable interrupts
   PSW_IEN        =  1;          
-
 
 } //  End of function MAIN_vInit
 
