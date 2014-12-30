@@ -40,8 +40,8 @@ void CAN1_vInit(void)
   CAN1_OBJ[0].UAR  =  0x0000;    // set CAN1 upper arbitration register
   CAN1_OBJ[0].LAR  =  0x0000;    // set CAN1 lower arbitration register
 
-  CAN1_OBJ[0].Data[0]  =  0xF5;  // set data byte 0
-  CAN1_OBJ[0].Data[1]  =  0x55;  // set data byte 1
+  CAN1_OBJ[0].Data[0]  =  0x00;  // set data byte 0
+  CAN1_OBJ[0].Data[1]  =  0x00;  // set data byte 1
   CAN1_OBJ[0].Data[2]  =  0x00;  // set data byte 2
   CAN1_OBJ[0].Data[3]  =  0x00;  // set data byte 3
   CAN1_OBJ[0].Data[4]  =  0x00;  // set data byte 4
@@ -63,8 +63,8 @@ void CAN1_vInit(void)
   CAN1_OBJ[1].UAR  =  0x0000;    // set CAN1 upper arbitration register
   CAN1_OBJ[1].LAR  =  0x0000;    // set CAN1 lower arbitration register
 
-  CAN1_OBJ[1].Data[0]  =  0xF5;  // set data byte 0
-  CAN1_OBJ[1].Data[1]  =  0x50;  // set data byte 1
+  CAN1_OBJ[1].Data[0]  =  0x00;  // set data byte 0
+  CAN1_OBJ[1].Data[1]  =  0x00;  // set data byte 1
   CAN1_OBJ[1].Data[2]  =  0x00;  // set data byte 2
   CAN1_OBJ[1].Data[3]  =  0x00;  // set data byte 3
   CAN1_OBJ[1].Data[4]  =  0x00;  // set data byte 4
@@ -239,18 +239,27 @@ void CAN1_viCAN1(void) interrupt XP0INT
 						// The CAN1 controller has stored a new message
 						// into this object.
 						// Write your code here!!!!
-						to_return = CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8;
-						IO_vWritePort(P2,~(CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8));
-						to_return++;
-						CAN1_OBJ[0].Data[1] = (char)(to_return & 0xFF);
-						CAN1_OBJ[0].Data[0] = (char)((to_return & 0xFF00) >> 8);
-						for(i=0;i<0xFFFF;i++) {}
-						for(i=0;i<0xFFFF;i++) {}
-						for(i=0;i<0xFFFF;i++) {}
-						for(i=0;i<0xFFFF;i++) {}  
-						IO_vWritePort(P2,~(CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8));
-						CAN1_vTransmit(1);
-					/*}*/
+
+						switch (CAN1_OBJ[1].Data[0])
+						{
+							case 1: //set brightness
+								GPT1_setBrightness(CAN1_OBJ[1].Data[1]);
+								break;
+							case 2:
+								//patterID(CAN1_OBJ[1].Data[1])
+								break;
+							case 3:
+								CAN1_OBJ[0].Data[1] = GPT1_getBrightness();
+								CAN1_OBJ[0].Data[0] = 0x04;
+								for(i=0;i<0xFFFF;i++) {}
+								for(i=0;i<0xFFFF;i++) {}
+								for(i=0;i<0xFFFF;i++) {}
+								for(i=0;i<0xFFFF;i++) {}
+								CAN1_vTransmit(1);
+								break;
+							default:
+								break;
+						}
 					CAN1_OBJ[1].MCR = 0xfdff; // reset NEWDAT
 				}
 			break;
@@ -260,7 +269,8 @@ void CAN1_viCAN1(void) interrupt XP0INT
 		// USER CODE BEGIN (CAN1,50)
 		// USER CODE END
 	//}// end while 
-}// End of function CAN1_viCAN1
+}// End of function CAN1_viCAN1
+
 
   /*uword uwIntID;
 

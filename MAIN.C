@@ -47,7 +47,7 @@ void main(void)
 	ASC0_vReceiverOn();
 	while(1) {
 
-		homeScreen();
+		//homeScreen();
 	}
 
 

@@ -319,29 +319,15 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>15</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>128</TopLine>
+      <TopLine>136</TopLine>
       <CurrentLine>146</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MAIN.C</PathWithFileName>
       <FilenameWithoutPath>MAIN.C</FilenameWithoutPath>
-    </File>
-    <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>2</FileNumber>
-      <FileType>2</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\One\C167_Init-2.a66</PathWithFileName>
-      <FilenameWithoutPath>C167_Init-2.a66</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
@@ -361,11 +347,11 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>4</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>6</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>158</TopLine>
+      <TopLine>152</TopLine>
       <CurrentLine>180</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\GPT1.C</PathWithFileName>
@@ -387,22 +373,50 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>6</FileNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\CAN1.C</PathWithFileName>
+      <FilenameWithoutPath>CAN1.C</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>0</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>9</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>2846</TopLine>
-      <CurrentLine>2859</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\FullLab.asm</PathWithFileName>
-      <FilenameWithoutPath>FullLab.asm</FilenameWithoutPath>
+      <PathWithFileName>.\project.asm</PathWithFileName>
+      <FilenameWithoutPath>project.asm</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\C167_Init-2.a66</PathWithFileName>
+      <FilenameWithoutPath>C167_Init-2.a66</FilenameWithoutPath>
     </File>
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>N:\Documents\Realtime Embedded Systems\Serial_Dave\GPT1.H</PathWithFilename>
+    <PathWithFilename>\\smbhome.uscs.susx.ac.uk\rw252\Documents\rtes\GPT1.H</PathWithFilename>
     <TopLine>117</TopLine>
     <CurrentLine>142</CurrentLine>
     <Constant>0</Constant>
@@ -428,7 +442,7 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>N:\Documents\Realtime Embedded Systems\Serial_Dave\ASC0.H</PathWithFilename>
+    <PathWithFilename>\\smbhome.uscs.susx.ac.uk\rw252\Documents\rtes\ASC0.H</PathWithFilename>
     <TopLine>103</TopLine>
     <CurrentLine>119</CurrentLine>
     <Constant>0</Constant>
@@ -461,28 +475,10 @@
       <ActiveTab>4</ActiveTab>
       <Documents>
         <Doc>
-          <Name>.\MAIN.C</Name>
-          <ColumnNumber>15</ColumnNumber>
-          <TopLine>128</TopLine>
-          <CurrentLine>146</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\ASC0.C</Name>
-          <ColumnNumber>43</ColumnNumber>
-          <TopLine>230</TopLine>
-          <CurrentLine>254</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>.\FullLab.asm</Name>
-          <ColumnNumber>9</ColumnNumber>
-          <TopLine>2846</TopLine>
-          <CurrentLine>2859</CurrentLine>
-        </Doc>
-        <Doc>
-          <Name>ASC0.H</Name>
-          <ColumnNumber>48</ColumnNumber>
-          <TopLine>103</TopLine>
-          <CurrentLine>119</CurrentLine>
+          <Name>GPT1.H</Name>
+          <ColumnNumber>10</ColumnNumber>
+          <TopLine>117</TopLine>
+          <CurrentLine>142</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\GPT1.C</Name>
@@ -491,10 +487,22 @@
           <CurrentLine>180</CurrentLine>
         </Doc>
         <Doc>
-          <Name>GPT1.H</Name>
-          <ColumnNumber>10</ColumnNumber>
-          <TopLine>117</TopLine>
-          <CurrentLine>142</CurrentLine>
+          <Name>ASC0.H</Name>
+          <ColumnNumber>48</ColumnNumber>
+          <TopLine>103</TopLine>
+          <CurrentLine>119</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\ASC0.C</Name>
+          <ColumnNumber>43</ColumnNumber>
+          <TopLine>230</TopLine>
+          <CurrentLine>254</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\MAIN.C</Name>
+          <ColumnNumber>15</ColumnNumber>
+          <TopLine>136</TopLine>
+          <CurrentLine>146</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>
