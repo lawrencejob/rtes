@@ -2,7 +2,7 @@
 *.plg
 *.SBR
 *.uvg*
-*.uvp*
+#*.uvp*
 *.rtf
 *.lnp
 *.bak
