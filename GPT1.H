@@ -130,6 +130,7 @@ void GPT1_vInit(void);
 
 #define GPT1_vLoadTmr(TimerNr, Value) TimerNr = Value
 
+extern unsigned char GPT1_getBrightness(void);
 extern void GPT1_setBrightness(unsigned char brightness_in);
 
 
@@ -138,6 +139,7 @@ extern void GPT1_setBrightness(unsigned char brightness_in);
 //****************************************************************************
 
 #define T2INT 0x22
+#define T4INT 0x24
 
 // USER CODE BEGIN (GPT1_Header,9)
 

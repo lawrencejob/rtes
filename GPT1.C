@@ -137,8 +137,8 @@ void GPT1_vInit(void)
   ///  - timer 3 output toggle latch (T3OTL) is set to 0
   ///  - timer 3 run bit is reset
 
-  T3CON          =  0x0000;      // load timer 3 control register
-  T3             =  0x0000;      // load timer 3 register
+  T3CON          =  0x0080;      // load timer 3 control register
+  T3             =  0x9896;      // load timer 3 register
 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the GPT1 Core Timer 2:
@@ -162,8 +162,8 @@ void GPT1_vInit(void)
   ///  - external up/down control is disabled
   ///  - timer 4 run bit is reset
 
-  T4CON          =  0x0000;      // load timer 4 control register
-  T4             =  0x0000;      // load timer 4 register
+  T4CON          =  0x0086;      // load timer 4 control register
+  T4             =  0x9896;      // load timer 4 register
 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the used GPT1 Port Pins:
@@ -178,6 +178,7 @@ void GPT1_vInit(void)
   ///  - timer 2 interrupt group level (GLVL) = 2
 
   T2IC           =  0x006A;     
+  T4IC           =  0x0069;     
 
 
   // USER CODE BEGIN (GPT1_Function,3)
@@ -198,6 +199,10 @@ extern void GPT1_setBrightness(unsigned char brightness_in) {
 	brightness = brightness_in;
 }
 
+extern unsigned char GPT1_getBrightness(void){
+	return brightness;
+}
+
 void GPT1_viTmr2(void) interrupt T2INT 	{
 	
 	//LED_ITERATOR++;
@@ -214,4 +219,10 @@ void GPT1_viTmr2(void) interrupt T2INT 	{
 	IO_vWritePort(P2, (LED_ITERATOR>brightness)?(0xFFFF):(0x0F0F));
 	GPT1_TIMER_2 = 0x1;
 
+}
+
+
+void GPT1_viTmr4(void) interrupt T4INT {
+	ASC0_vSendData('x');
+	GPT1_TIMER_4 = 0x1;
 }
