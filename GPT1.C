@@ -194,6 +194,10 @@ unsigned char LED_ITERATOR = 0;
 unsigned char brightness = 0;
 unsigned int counter = 0;
 
+extern unsigned char GPT1_getBrightness(void){
+	return brightness;
+}
+
 extern void GPT1_setBrightness(unsigned char brightness_in) {
 	brightness = brightness_in;
 }
