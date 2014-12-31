@@ -310,11 +310,19 @@
               <FilePath>.\IO.C</FilePath>
             </File>
             <File>
-              <FileName>FullLab.asm</FileName>
+              <FileName>CAN1.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\CAN1.C</FilePath>
+            </File>
+            <File>
+              <FileName>project.asm</FileName>
               <FileType>2</FileType>
-              <FilePath>.\FullLab.asm</FilePath>
+              <FilePath>.\project.asm</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>New Group</GroupName>
         </Group>
       </Groups>
     </Target>

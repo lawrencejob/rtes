@@ -1,13 +1,11 @@
 #include "MAIN.H"
+#include "Tools.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void CAN1_vInit(void)
 {
- 
-
-  ///  -----------------------------------------------------------------------
-  ///  ------------ CAN1 Control/Status Register --------------
-  ///  -----------------------------------------------------------------------
-  ///  - start the initialization of the CAN1 Modul
 
   C1CSR          =  0x0041;      // set CAN1 INIT and CCE
 
@@ -72,83 +70,19 @@ void CAN1_vInit(void)
   CAN1_OBJ[1].Data[6]  =  0x00;  // set data byte 6
   CAN1_OBJ[1].Data[7]  =  0x00;  // set data byte 7
 
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 3 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 3 is not valid
-  CAN1_OBJ[2].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 4 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 4 is not valid
-  CAN1_OBJ[3].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 5 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 5 is not valid
-  CAN1_OBJ[4].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 6 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 6 is not valid
-  CAN1_OBJ[5].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 7 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 7 is not valid
-  CAN1_OBJ[6].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 8 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 8 is not valid
-  CAN1_OBJ[7].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 9 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 9 is not valid
-  CAN1_OBJ[8].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 10 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 10 is not valid
-  CAN1_OBJ[9].MCR  =  0x5555;    // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 11 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 11 is not valid
-  CAN1_OBJ[10].MCR  =  0x5555;   // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 12 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 12 is not valid
-  CAN1_OBJ[11].MCR  =  0x5555;   // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 13 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 13 is not valid
-  CAN1_OBJ[12].MCR  =  0x5555;   // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 14 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 14 is not valid
-  CAN1_OBJ[13].MCR  =  0x5555;   // set CAN1 message control register
-
-  ///  -----------------------------------------------------------------------
-  ///  ---------------- Configure Message Object 15 --------------------------
-  ///  -----------------------------------------------------------------------
-  ///  - message object 15 is not valid
-  CAN1_OBJ[14].MCR  =  0x5555;   // set CAN1 message control register
+  CAN1_OBJ[2].MCR  =  0x5555;
+  CAN1_OBJ[3].MCR  =  0x5555;
+  CAN1_OBJ[4].MCR  =  0x5555;
+  CAN1_OBJ[5].MCR  =  0x5555;
+  CAN1_OBJ[6].MCR  =  0x5555; 
+  CAN1_OBJ[7].MCR  =  0x5555;
+  CAN1_OBJ[8].MCR  =  0x5555;
+  CAN1_OBJ[9].MCR  =  0x5555; 
+  CAN1_OBJ[10].MCR  =  0x5555;
+  CAN1_OBJ[11].MCR  =  0x5555;
+  CAN1_OBJ[12].MCR  =  0x5555;
+  CAN1_OBJ[13].MCR  =  0x5555;
+  CAN1_OBJ[14].MCR  =  0x5555;   
 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the used CAN1 Timer Port Pins:
@@ -171,22 +105,11 @@ void CAN1_vInit(void)
 
   XP0IC          =  0x0066;     
 
-
-  // USER CODE BEGIN (Init,3)
-
-  // USER CODE END
-
   /// ------------ CAN1 Control/Status Register --------------
   ///  - reset CCE and INIT
   ///  - enable interrupt generation from CAN1 Modul
 
   C1CSR          =  0x0002;      // set CAN1 control satatus register
-
-
-
-  // USER CODE BEGIN (Init,4)
-
-  // USER CODE END
 
 } //  End of function CAN1_vInit
 
@@ -208,223 +131,69 @@ void CAN1_vInit(void)
 //                to this function.
 //
 
-
+void handle_incoming(void);
 
 void CAN1_viCAN1(void) interrupt XP0INT
 {
 	unsigned int to_return = 0;
 	uword uwIntID;
-	//IO_vWritePort(P2,0xFFFF);
-	// USER CODE BEGIN (CAN1,2)
-	// USER CODE END
 	uwIntID = C1PCIR & 0x00ff;
 	//while (uwIntID = C1PCIR & 0x00ff){
-		switch (uwIntID & 0x00ff){
-			case 4: // Message Object 1 Interrupt
-				CAN1_OBJ[1].MCR = 0xfffd; // reset INTPN
-				if ((CAN1_OBJ[1].MCR & 0x0300) == 0x0200) // if NEWDAT set
+	switch (uwIntID & 0x00ff){
+		case 4: // Message Object 1 Interrupt
+			CAN1_OBJ[1].MCR = 0xfffd; // reset INTPN
+			if ((CAN1_OBJ[1].MCR & 0x0300) == 0x0200) // if NEWDAT set
+			{
+				//int i;
+				if ((CAN1_OBJ[1].MCR & 0x0c00) == 0x0800) // if MSGLST set
 				{
-					int i;
-					if ((CAN1_OBJ[1].MCR & 0x0c00) == 0x0800) // if MSGLST set
-					{
-						// Indicates that the CAN1 controller has stored a new
-						// message into this object, while NEWDAT was still set,
-						// ie. the previously stored message is lost.
-						CAN1_OBJ[1].MCR = 0xf7ff; // reset MSGLST
-						IO_vWritePort(P2,0x8181);
-					}
-					/*else (COMMENTING OUT BECAUSE WE DON'T WANT ANY MESSAGES TO GET LOST BECAUSE THE PASS_THE_PARCEL ALGORITHM BREAKS)
-					{*/
-					
-						// The CAN1 controller has stored a new message
-						// into this object.
-						// Write your code here!!!!
-						to_return = CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8;
-						IO_vWritePort(P2,~(CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8));
-						to_return++;
-						CAN1_OBJ[0].Data[1] = (char)(to_return & 0xFF);
-						CAN1_OBJ[0].Data[0] = (char)((to_return & 0xFF00) >> 8);
-						for(i=0;i<0xFFFF;i++) {}
-						for(i=0;i<0xFFFF;i++) {}
-						for(i=0;i<0xFFFF;i++) {}
-						for(i=0;i<0xFFFF;i++) {}  
-						IO_vWritePort(P2,~(CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8));
-						CAN1_vTransmit(1);
-					/*}*/
-					CAN1_OBJ[1].MCR = 0xfdff; // reset NEWDAT
+					// Indicates that the CAN1 controller has stored a new
+					// message into this object, while NEWDAT was still set,
+					// ie. the previously stored message is lost.
+					CAN1_OBJ[1].MCR = 0xf7ff; // reset MSGLST
+					IO_vWritePort(P2,0x8181);
 				}
-			break;
-			default:
-			break;
-		}// end switch()
-		// USER CODE BEGIN (CAN1,50)
-		// USER CODE END
-	//}// end while 
-}// End of function CAN1_viCAN1
 
-  /*uword uwIntID;
+				handle_incoming();										
 
-  while (uwIntID = C1PCIR & 0x00ff)
-  {
-    switch (uwIntID & 0x00ff)
-    {
-
-      default:
-              break;
-
-    }  // end switch()
-
-  }    // end while
-
-} //  End of function CAN1_viCAN1	 */
-
-
-
-
-void CAN1_vGetMsgObj(ubyte ubObjNr, TCAN1_Obj *pstObj)
-{
-  ubyte i;
-  ulong v;
-
-  pstObj->ubMsgCfg = CAN1_OBJ[ubObjNr-1].MCFG;
-
-  v = 0;
-  if(CAN1_OBJ[ubObjNr - 1].MCFG & 0x04)  // extended identifier
-  {
-    v += (CAN1_OBJ[ubObjNr - 1].LAR & 0xf800) >> 11;  // ID  4.. 0
-    v += (CAN1_OBJ[ubObjNr - 1].LAR & 0x00ff) <<  5;  // ID 12.. 5
-    v += (ulong)(CAN1_OBJ[ubObjNr - 1].UAR & 0xff00) <<  5;  // ID 13..20
-    v += (ulong)(CAN1_OBJ[ubObjNr - 1].UAR & 0x00ff) << 21;  // ID 21..28
-  }
-  else                              // standard identifier 
-  {
-    v += (CAN1_OBJ[ubObjNr - 1].UAR & 0xe000) >> 13;  // ID 18..20
-    v += (CAN1_OBJ[ubObjNr - 1].UAR & 0x00ff) <<  3;  // ID 21..28
-  }
-  pstObj->ulArbitr = v;
-
-  for(i = 0; i < (CAN1_OBJ[ubObjNr - 1].MCFG & 0xf0) >> 4; i++)
-  {
-    pstObj->ubData[i] = CAN1_OBJ[ubObjNr - 1].Data[i];
-  }
-
-  pstObj->ubUser = CAN1_OBJ[ubObjNr - 1].Customer;
-
-  if(ubObjNr < 15 || (CAN1_OBJ[ubObjNr - 1].MCR & 0x000c) != 0x0008)
-  {
-    CAN1_OBJ[ubObjNr - 1].MCR = 0xfdff;  // reset NEWDAT
-  }
+				/*//to_return = CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8;
+				//IO_vWritePort(P2,~(CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8));
+				//to_return++;
+				//CAN1_OBJ[0].Data[1] = (char)(to_return & 0xFF);
+				//CAN1_OBJ[0].Data[0] = (char)((to_return & 0xFF00) >> 8);
+				//for(i=0;i<0xFFFF;i++) {}
+				//for(i=0;i<0xFFFF;i++) {} 
+				//IO_vWritePort(P2,~(CAN1_OBJ[1].Data[1] | CAN1_OBJ[1].Data[0] << 8));
+				CAN1_vTransmit(1);
+				CAN1_OBJ[1].MCR = 0xfdff; // reset NEWDAT  */
+			}
+		break;
+		default:
+		break;
+	}
 }
 
+#define RESPONSE_CURRENT_BRIGHTNESS 4
 
-//****************************************************************************
-// @Function      ubyte CAN1_ubRequestMsgObj(ubyte ubObjNr) 
-//
-//----------------------------------------------------------------------------
-// @Description   If a TRANSMIT OBJECT is to be reconfigured it must first be 
-//                accessed. The access to the transmit object is exclusive. 
-//                This function checks whether the choosen message object is 
-//                still executing a transmit request, or if the object can be 
-//                accessed exclusively.
-//                After the message object is reserved, it can be 
-//                reconfigured by using the function CAN1_vConfigMsgObj or 
-//                CAN1_vLoadData.
-//                Both functions enable access to the object for the CAN1 
-//                controller. 
-//                By calling the function CAN1_vTransmit transfering of data 
-//                is started.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   0 message object is busy (a transfer is active), else 1
-//
-//----------------------------------------------------------------------------
-// @Parameters    ubObjNr: 
-//                Number of the message object (1-14)
-//
-//----------------------------------------------------------------------------
-// @Date          28/12/2014
-//
-//****************************************************************************
+void handle_incoming(void) {
+ 	if(CAN1_OBJ[1].Data[0] == RESPONSE_CURRENT_BRIGHTNESS) {
+		char out[3] = "xxx";
+		// ASSERT: We know that the (or, for now, 'a') remote device is trying to tell us what the brightness is
+		sendString("The brightness is: ");
+		sprintf(out, "%d", CAN1_OBJ[1].Data[1]);
+		sendString(out);
+		receiveCurrentBrightness(CAN1_OBJ[1].Data[1]);
 
-// USER CODE BEGIN (RequestMsgObj,1)
-
-// USER CODE END
-
-ubyte CAN1_ubRequestMsgObj(ubyte ubObjNr)
-{
-  ubyte ubReturn;
-
-  ubReturn = 0;
-  if((CAN1_OBJ[ubObjNr - 1].MCR & 0x3000) == 0x1000)  // if reset TXRQ 
-  {
-    CAN1_OBJ[ubObjNr - 1].MCR = 0xfbff;               // set CPUUPD 
-    ubReturn = 1;
-  }
-  return(ubReturn);
+	}else {
+		// I really hope this doesn't happen: maybe do something to indicate an error
+		sendString("Received an unrecognised frame from the remote device.");
+	}
 }
-
-
-//****************************************************************************
-// @Function      void CAN1_vTransmit(ubyte ubObjNr) 
-//
-//----------------------------------------------------------------------------
-// @Description   This function triggers the CAN1 controller to send the 
-//                selected message.
-//                If the selected message object is a TRANSMIT OBJECT then 
-//                this function triggers the sending of a data frame. If 
-//                however the selected message object is a RECEIVE OBJECT 
-//                this function triggers the sending of a remote frame.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    ubObjNr: 
-//                Number of the message object (1-14)
-//
-//----------------------------------------------------------------------------
-// @Date          28/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (Transmit,1)
-
-// USER CODE END
 
 void CAN1_vTransmit(ubyte ubObjNr)
 {
   CAN1_OBJ[ubObjNr - 1].MCR = 0xe7ff;  // set TXRQ,reset CPUUPD
 }
-
-
-//****************************************************************************
-// @Function      void CAN1_vLoadData(ubyte ubObjNr, ubyte *pubData) 
-//
-//----------------------------------------------------------------------------
-// @Description   If a hardware TRANSMIT OBJECT has to be loaded with data 
-//                but not with a new identifier, this function may be used 
-//                instead of the function CAN1_vConfigMsgObj. The message 
-//                object should be accessed by calling the function 
-//                CAN1_ubRequestMsgObj before calling this function. This 
-//                prevents the CAN1 controller from working with invalid data.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    ubObjNr: 
-//                Number of the message object to be configured (1-15)
-// @Parameters    *pubData: 
-//                Pointer on a data buffer
-//
-//----------------------------------------------------------------------------
-// @Date          28/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (LoadData,1)
-
-// USER CODE END
 
 void CAN1_vLoadData(ubyte ubObjNr, ubyte *pubData)
 {
@@ -440,32 +209,14 @@ void CAN1_vLoadData(ubyte ubObjNr, ubyte *pubData)
   CAN1_OBJ[ubObjNr - 1].MCR = 0xf7ff;  // reset CPUUPD
 }
 
-
-//****************************************************************************
-// @Function      void CAN1_vReleaseObj(ubyte ubObjNr) 
-//
-//----------------------------------------------------------------------------
-// @Description   This function resets the NEWDAT flag of the selected 
-//                RECEIVE OBJECT, so that the CAN1 controller have access to 
-//                it. This function must be called if the function 
-//                CAN1_ubNewData detects, that new data are present in the 
-//                message object and the actual data have been read by 
-//                calling the function CAN1_vGetMsgObj. 
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    ubObjNr: 
-//                Number of the message object (1-15)
-//
-//----------------------------------------------------------------------------
-// @Date          28/12/2014
-//
-//****************************************************************************
-
 void CAN1_vReleaseObj(ubyte ubObjNr)
 {
   CAN1_OBJ[ubObjNr - 1].MCR = 0xfdff;     // reset NEWDAT
 }
 
+
+extern void CAN1_SendShort(unsigned char opcode, unsigned char operand) {
+	CAN1_OBJ[0].Data[0] = opcode;
+	CAN1_OBJ[0].Data[1] = operand;
+	CAN1_vTransmit(1);
+}

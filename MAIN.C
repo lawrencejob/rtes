@@ -1,17 +1,22 @@
 #include "MAIN.H"
+#include "Tools.h"
 #include "ASC0.H"
+#include "CAN1.H"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-
 void homeScreen(void);
-int waitForCharInput(void);
 void drawBrightnessScreen(void);
-void sendNL(void);
+void drawAnimationScreen(void);
+void sendCurrentBrightness(void);
+void sendCurrentAnimation(void);
+
+unsigned char current_brightness = 0, current_animation = 0;
 
 #define BRIGHTNESS_INCREMENT 5
 #define BRIGHTNESS_MAX 100
+#define ANIMATION_MAX 3
 
 void MAIN_vInit(void)
 {
@@ -35,7 +40,11 @@ void MAIN_vInit(void)
 
 } //  End of function MAIN_vInit
 
-
+char animation_names[4][16] = {
+		"Boring",
+		"Nightrider",
+		"Stars",
+		"Extra-fun"};
 
 
 void main(void)
@@ -53,13 +62,8 @@ void main(void)
 
 } // End of function main
 
-void sendString(char *msg);
 void menu_chooseBrightness(void);
 void menu_chooseAnimation(void);
-void resetEmulator(void);
-int waitForDirectionInput(void);
-void setColour(char foreground, char background);
-char transmitBuffer[1023];
 
 void homeScreen(void) {
 
@@ -93,15 +97,8 @@ void homeScreen(void) {
 void menu_chooseBrightness(void) {
 	unsigned char brightness = 0, loop_break = 0;
 	int direction = 0;
-	/*sendString("BRIGHTNESS SELECT");
-	brightness = (waitForCharInput()-48)*10;
-
-	sendString("\r\n\t\r\n\tYou chose ");
-	//sendString(brightness);
-	GPT1_setBrightness(brightness);*/
 	
 	resetEmulator();
-	//setColour(6, 7);
 
 	sendNL();
 	sendString("BRIGHTNESS SELECT:");
@@ -122,14 +119,20 @@ void menu_chooseBrightness(void) {
 			case 'C':
 			case 'c':
 				loop_break = 0;
-				if(GPT1_getBrightness()+5 <= BRIGHTNESS_MAX)
-					GPT1_setBrightness(GPT1_getBrightness()+BRIGHTNESS_INCREMENT);
+				if(current_brightness+5 <= BRIGHTNESS_MAX){
+					//GPT1_setBrightness(GPT1_getBrightness()+BRIGHTNESS_INCREMENT);
+					current_brightness+=BRIGHTNESS_INCREMENT;
+					sendCurrentBrightness();
+				}
 			break;
 			case 'D':
 			case 'd':
 				loop_break = 0;
-				if(GPT1_getBrightness() >= BRIGHTNESS_INCREMENT)
-					GPT1_setBrightness(GPT1_getBrightness() - BRIGHTNESS_INCREMENT);
+				if(current_brightness >= BRIGHTNESS_INCREMENT){
+					//GPT1_setBrightness(GPT1_getBrightness() - BRIGHTNESS_INCREMENT);
+					current_brightness-=BRIGHTNESS_INCREMENT;
+					sendCurrentBrightness();
+				}
 			break;
 			default:
 				loop_break = -1;
@@ -147,15 +150,15 @@ void drawBrightnessScreen(void) {
 	sendString("\t");
 
 	sendString("[ ");
-	for (c=0; c<GPT1_getBrightness(); c+=BRIGHTNESS_INCREMENT){
+	for (c=0; c<current_brightness; c+=BRIGHTNESS_INCREMENT){
 		sendString("=");
 	}
-	for(c=BRIGHTNESS_MAX; c>GPT1_getBrightness(); c-= BRIGHTNESS_INCREMENT) {
+	for(c=BRIGHTNESS_MAX; c>current_brightness; c-= BRIGHTNESS_INCREMENT) {
 	 	sendString(" ");
 	}
 	sendString(" ] ");
 
-	sprintf(percentage, "%d", GPT1_getBrightness());
+	sprintf(percentage, "%d", current_brightness);
 	sendString(percentage);
 	sendString("% ");
 
@@ -164,62 +167,79 @@ void drawBrightnessScreen(void) {
 }
 
 void menu_chooseAnimation(void) {
-	sendString("ANIMATION SELECT");
-}
+	unsigned char brightness = 0, loop_break = 0;
+	int direction = 0;
+	resetEmulator();
 
-void setColour(char foreground, char background){
-	ASC0_vSendData(27);
-	sendString("[3");
-	ASC0_vSendData(foreground);
-	ASC0_vSendData(27);
-	sendString("[4");
-	ASC0_vSendData(background);
+	sendNL();
+	sendString("ANIMATION SELECT:");
 
-}
+	sendNL();
+	sendString("Use the arrow keys to select an animation.");
 
-void resetEmulator(void) {
-	sendString("\r\n\t\r\n\t");
-	while(ASC0_cReadyToTransmit() == -1){}
-	ASC0_vSendData(27);
-	sendString("[2J");
-	while(ASC0_cReadyToTransmit() == -1){}
-	ASC0_vSendData(27);
-	sendString("[H");
-
-	/*sendNL();
-	sendString("---------------");
-	sendNL();*/
-}
-
-void sendString(char *msg) {
-	unsigned char oi;
-	for(oi = 0;oi<strlen(msg);oi++) {
-		while(ASC0_cReadyToTransmit() == -1){}
-		ASC0_vSendData(msg[oi]);		
-	}
-}
-
-void sendNL(void) {
-	sendString("\r\n\t");
-}
-
-int waitForCharInput(void) {
-	int in;
-	while(ASC0_cReadyToReceive() == -1) {}
-	//ASC0_vSendData('x');
-	in = ASC0_uwGetData();
-	IO_vWritePort(P2, 0xFFFF);
+	sendNL();
+	sendString("Press enter when you're done.");
 	
-	return in;
+	sendNL();
+	sendNL();
+
+	while(loop_break==0){
+		drawAnimationScreen();
+		direction = waitForDirectionInput();
+		switch(direction) {
+			case 'C':
+			case 'c':
+				loop_break = 0;
+				if(current_animation+1 <= ANIMATION_MAX){
+					current_animation++;
+					sendCurrentAnimation();
+				}
+			break;
+			case 'D':
+			case 'd':
+				loop_break = 0;
+				if(current_animation > 0){
+					current_animation--;
+					sendCurrentAnimation();
+				}
+			break;
+			default:
+				loop_break = -1;
+				return;
+			break;
+		}
+	}
+}	
+
+void drawAnimationScreen(void) {
+
+	// instruct the terminal emulator to carriage return
+	ASC0_vSendData(0xD);
+	sendString("\t                               ");
+	ASC0_vSendData(0xD);
+
+	// send 'tab' symbol
+	sendString("\t");
+
+	sendString("< ");
+	sendString(animation_names[current_animation]);
+	sendString(" > ");
+	
+	return;
 }
 
-int waitForDirectionInput(void) {
-	int in;
-	char loop_break = 0;
-	while(loop_break == 0){
-		in = waitForCharInput();
-		if(in == 'A' || in == 'B' || in == 'C' || in == 'D' || in == 0xD || in == 0xA) return in;
-	}
-	return in;
+
+void sendCurrentAnimation(void) {
+	CAN1_SendShort(2,current_animation);
 }
+
+void sendCurrentBrightness(void){
+	// send 'current_brightness' over CAN
+	CAN1_SendShort(1,current_brightness);
+}
+
+void receiveCurrentBrightness(unsigned char b) {
+	current_brightness = b;
+}
+
 

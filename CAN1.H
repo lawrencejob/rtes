@@ -160,4 +160,6 @@ void CAN1_vReleaseObj(ubyte ubObjNr);
 // USER CODE END
 
 
+extern void CAN1_SendShort(unsigned char opcode, unsigned char operand);
+
 #endif  // ifndef _CAN1_H_

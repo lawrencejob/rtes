@@ -1928,6 +1928,7 @@ typedef volatile struct
 #include <Intrins.h>
 
 #include  "IO.H"
+#include  "Tools.h"
 #include  "ASC0.H"
 #include  "GPT1.H"
 #include  "CAN1.H"
@@ -1936,5 +1937,5 @@ typedef volatile struct
 
 // USER CODE END
 
-
+void receiveCurrentBrightness(unsigned char b);
 #endif  // ifndef _MAIN_H_
