@@ -96,53 +96,12 @@
 
 void GPT1_vInit(void);
 
-
-// USER CODE BEGIN (GPT1_Header,8)
-
-// USER CODE END
-
-//****************************************************************************
-// @Macro         GPT1_vLoadTmr(TimerNr, Value) 
-//
-//----------------------------------------------------------------------------
-// @Description   This macro loads the selected GPT1 timer with the forwarded 
-//                value. The timer is not stopped. The access of the CPU to 
-//                the registers of the timers is of higher priority than a 
-//                timer increment, a reload or a capture event. The following 
-//                definitions are available for TimerNr:
-//                GPT1_TIMER_2
-//                GPT1_TIMER_3
-//                GPT1_TIMER_4
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    TimerNr: 
-//                the name of the timer to be loaded
-// @Parameters    Value: 
-//                16-bit value to be loaded
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
 #define GPT1_vLoadTmr(TimerNr, Value) TimerNr = Value
 
 extern unsigned char GPT1_getBrightness(void);
 extern void GPT1_setBrightness(unsigned char brightness_in);
-
-
-//****************************************************************************
-// @Interrupt Vectors
-//****************************************************************************
+extern void GPT1_setAnimation(unsigned char anim);
 
 #define T2INT 0x22
-
-// USER CODE BEGIN (GPT1_Header,9)
-
-// USER CODE END
-
 
 #endif  // ifndef _GPT1_H_

@@ -1,4 +1,5 @@
 #include "MAIN.H"
+#include "GPT1.H"
 
 void CAN1_vInit(void)
 {
@@ -169,12 +170,7 @@ void CAN1_vInit(void)
   ///  - CAN1 interrupt priority level (ILVL) = 9
   ///  - CAN1 interrupt group level (GLVL) = 2
 
-  XP0IC          =  0x0066;     
-
-
-  // USER CODE BEGIN (Init,3)
-
-  // USER CODE END
+  XP0IC          =  0x0066;   
 
   /// ------------ CAN1 Control/Status Register --------------
   ///  - reset CCE and INIT
@@ -182,32 +178,7 @@ void CAN1_vInit(void)
 
   C1CSR          =  0x0002;      // set CAN1 control satatus register
 
-
-
-  // USER CODE BEGIN (Init,4)
-
-  // USER CODE END
-
 } //  End of function CAN1_vInit
-
-
-//****************************************************************************
-// @Function      void CAN1_viCAN1(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the interrupt service routine for the CAN1 
-//                controller. Depending on the configuration it is executed 
-//                if:
-//                - the busoff or the error warning status is reached 
-//                  (EIE is set)
-//                - a message has been sent or received successfully or a bus 
-//                  error occurred (SIE is set)
-//                - the bit INTPND (interrupt pending) in one of the message 
-//                  object control-registers is set (at Tx or Rx)
-//                Please note that you have to add application specific code 
-//                to this function.
-//
-
 
 
 void CAN1_viCAN1(void) interrupt XP0INT
@@ -215,8 +186,6 @@ void CAN1_viCAN1(void) interrupt XP0INT
 	unsigned int to_return = 0;
 	uword uwIntID;
 	//IO_vWritePort(P2,0xFFFF);
-	// USER CODE BEGIN (CAN1,2)
-	// USER CODE END
 	uwIntID = C1PCIR & 0x00ff;
 	//while (uwIntID = C1PCIR & 0x00ff){
 		switch (uwIntID & 0x00ff){
@@ -224,7 +193,7 @@ void CAN1_viCAN1(void) interrupt XP0INT
 				CAN1_OBJ[1].MCR = 0xfffd; // reset INTPN
 				if ((CAN1_OBJ[1].MCR & 0x0300) == 0x0200) // if NEWDAT set
 				{
-					int i;
+					
 					if ((CAN1_OBJ[1].MCR & 0x0c00) == 0x0800) // if MSGLST set
 					{
 						// Indicates that the CAN1 controller has stored a new
@@ -246,15 +215,11 @@ void CAN1_viCAN1(void) interrupt XP0INT
 								GPT1_setBrightness(CAN1_OBJ[1].Data[1]);
 								break;
 							case 2:
-								//patterID(CAN1_OBJ[1].Data[1])
+								GPT1_setAnimation(CAN1_OBJ[1].Data[1]);
 								break;
 							case 3:
 								CAN1_OBJ[0].Data[1] = GPT1_getBrightness();
 								CAN1_OBJ[0].Data[0] = 0x04;
-								for(i=0;i<0xFFFF;i++) {}
-								for(i=0;i<0xFFFF;i++) {}
-								for(i=0;i<0xFFFF;i++) {}
-								for(i=0;i<0xFFFF;i++) {}
 								CAN1_vTransmit(1);
 								break;
 							default:
@@ -265,28 +230,8 @@ void CAN1_viCAN1(void) interrupt XP0INT
 			break;
 			default:
 			break;
-		}// end switch()
-		// USER CODE BEGIN (CAN1,50)
-		// USER CODE END
-	//}// end while 
-}// End of function CAN1_viCAN1
-
-
-  /*uword uwIntID;
-
-  while (uwIntID = C1PCIR & 0x00ff)
-  {
-    switch (uwIntID & 0x00ff)
-    {
-
-      default:
-              break;
-
-    }  // end switch()
-
-  }    // end while
-
-} //  End of function CAN1_viCAN1	 */
+		}
+}
 
 
 

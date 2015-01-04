@@ -216,7 +216,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGD167</Key>
-          <Name>(103=-1,-1,-1,-1,0)(3010=-1,-1,-1,-1,0)(108=-1,-1,-1,-1,0)(3004=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(3011=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(3009=-1,-1,-1,-1,0)(88=-1,-1,-1,-1,0)(89=-1,-1,-1,-1,0)(90=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0)(94=-1,-1,-1,-1,0)(95=-1,-1,-1,-1,0)(96=-1,-1,-1,-1,0)(97=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(101=-1,-1,-1,-1,0)(98=-1,-1,-1,-1,0)(105=-1,-1,-1,-1,0)(104=-1,-1,-1,-1,0)(80=1074,273,1290,637,1)(3007=-1,-1,-1,-1,0)(3000=-1,-1,-1,-1,0)(3003=-1,-1,-1,-1,0)(3013=-1,-1,-1,-1,0)(3012=-1,-1,-1,-1,0)</Name>
+          <Name>(103=-1,-1,-1,-1,0)(3010=-1,-1,-1,-1,0)(108=-1,-1,-1,-1,0)(3004=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(3011=-1,-1,-1,-1,0)(106=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(3009=-1,-1,-1,-1,0)(88=-1,-1,-1,-1,0)(89=-1,-1,-1,-1,0)(90=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0)(94=-1,-1,-1,-1,0)(95=-1,-1,-1,-1,0)(96=-1,-1,-1,-1,0)(97=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(101=-1,-1,-1,-1,0)(98=-1,-1,-1,-1,0)(105=-1,-1,-1,-1,0)(104=-1,-1,-1,-1,0)(80=1074,273,1290,637,0)(3007=-1,-1,-1,-1,0)(3000=945,128,1542,523,0)(3003=-1,-1,-1,-1,0)(3013=-1,-1,-1,-1,0)(3012=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint>
@@ -225,7 +225,7 @@
           <Type>0</Type>
           <LineNumber>252</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>66018</Address>
+          <Address>68260</Address>
           <ByteObject>0</ByteObject>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
@@ -233,20 +233,35 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>ASC0.C</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\ASC0\252</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
           <LineNumber>251</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>66014</Address>
+          <Address>68256</Address>
           <ByteObject>0</ByteObject>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>ASC0.C</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\ASC0\251</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>222</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>65878</Address>
+          <ByteObject>0</ByteObject>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>CAN1.C</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -284,8 +299,8 @@
         <periodic>1</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
-        <aSer1>1</aSer1>
-        <aSer2>1</aSer2>
+        <aSer1>0</aSer1>
+        <aSer2>0</aSer2>
         <aPa>0</aPa>
         <viewmode>1</viewmode>
         <vrSel>0</vrSel>
@@ -294,12 +309,12 @@
         <AscS1>0</AscS1>
         <AscS2>0</AscS2>
         <AscS3>0</AscS3>
-        <aSer3>1</aSer3>
+        <aSer3>0</aSer3>
         <eProf>0</eProf>
         <aLa>0</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>1</aSer4>
+        <aSer4>0</aSer4>
         <StkLoc>0</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -321,45 +336,45 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>15</ColumnNumber>
+      <ColumnNumber>37</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>136</TopLine>
-      <CurrentLine>146</CurrentLine>
+      <TopLine>172</TopLine>
+      <CurrentLine>197</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\MAIN.C</PathWithFileName>
       <FilenameWithoutPath>MAIN.C</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>3</FileNumber>
+      <FileNumber>2</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>43</ColumnNumber>
+      <ColumnNumber>50</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>230</TopLine>
-      <CurrentLine>254</CurrentLine>
+      <TopLine>85</TopLine>
+      <CurrentLine>108</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\ASC0.C</PathWithFileName>
       <FilenameWithoutPath>ASC0.C</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>4</FileNumber>
+      <FileNumber>3</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>6</ColumnNumber>
+      <ColumnNumber>38</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>152</TopLine>
-      <CurrentLine>180</CurrentLine>
+      <TopLine>70</TopLine>
+      <CurrentLine>91</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\GPT1.C</PathWithFileName>
       <FilenameWithoutPath>GPT1.C</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>5</FileNumber>
+      <FileNumber>4</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -373,21 +388,21 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <FileNumber>5</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>21</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>193</TopLine>
+      <CurrentLine>212</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\CAN1.C</PathWithFileName>
       <FilenameWithoutPath>CAN1.C</FilenameWithoutPath>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <FileNumber>6</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -401,7 +416,7 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>0</FileNumber>
+      <FileNumber>7</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -416,9 +431,9 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>\\smbhome.uscs.susx.ac.uk\rw252\Documents\rtes\GPT1.H</PathWithFilename>
-    <TopLine>117</TopLine>
-    <CurrentLine>142</CurrentLine>
+    <PathWithFilename>\\smbhome.uscs.susx.ac.uk\rw252\Documents\rtes\ASC0.H</PathWithFilename>
+    <TopLine>103</TopLine>
+    <CurrentLine>128</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -442,9 +457,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>\\smbhome.uscs.susx.ac.uk\rw252\Documents\rtes\ASC0.H</PathWithFilename>
-    <TopLine>103</TopLine>
-    <CurrentLine>119</CurrentLine>
+    <PathWithFilename>\\smbhome.uscs.susx.ac.uk\rw252\Documents\rtes\GPT1.H</PathWithFilename>
+    <TopLine>90</TopLine>
+    <CurrentLine>108</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -472,37 +487,43 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>4</ActiveTab>
+      <ActiveTab>3</ActiveTab>
       <Documents>
         <Doc>
           <Name>GPT1.H</Name>
-          <ColumnNumber>10</ColumnNumber>
-          <TopLine>117</TopLine>
-          <CurrentLine>142</CurrentLine>
+          <ColumnNumber>22</ColumnNumber>
+          <TopLine>90</TopLine>
+          <CurrentLine>108</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\GPT1.C</Name>
-          <ColumnNumber>6</ColumnNumber>
-          <TopLine>152</TopLine>
-          <CurrentLine>180</CurrentLine>
+          <ColumnNumber>38</ColumnNumber>
+          <TopLine>70</TopLine>
+          <CurrentLine>91</CurrentLine>
         </Doc>
         <Doc>
           <Name>ASC0.H</Name>
-          <ColumnNumber>48</ColumnNumber>
+          <ColumnNumber>0</ColumnNumber>
           <TopLine>103</TopLine>
-          <CurrentLine>119</CurrentLine>
+          <CurrentLine>128</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\ASC0.C</Name>
-          <ColumnNumber>43</ColumnNumber>
-          <TopLine>230</TopLine>
-          <CurrentLine>254</CurrentLine>
+          <ColumnNumber>50</ColumnNumber>
+          <TopLine>85</TopLine>
+          <CurrentLine>108</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\MAIN.C</Name>
-          <ColumnNumber>15</ColumnNumber>
-          <TopLine>136</TopLine>
-          <CurrentLine>146</CurrentLine>
+          <ColumnNumber>37</ColumnNumber>
+          <TopLine>172</TopLine>
+          <CurrentLine>197</CurrentLine>
+        </Doc>
+        <Doc>
+          <Name>.\CAN1.C</Name>
+          <ColumnNumber>21</ColumnNumber>
+          <TopLine>193</TopLine>
+          <CurrentLine>212</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

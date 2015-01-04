@@ -1,130 +1,9 @@
-//****************************************************************************
-// @Module        General Purpose Timer Unit (GPT1)
-// @Filename      GPT1.C
-// @Project       FullLab.dav
-//----------------------------------------------------------------------------
-// @Controller    Infineon C167CS-L
-//
-// @Compiler      Keil
-//
-// @Codegenerator 2.2
-//
-// @Description   This file contains functions that use the GPT1 module.
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014 16:17:25
-//
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,1)
-
-// USER CODE END
-
-
-
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
-
 #include "MAIN.H"
-
-// USER CODE BEGIN (GPT1_General,2)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Macros
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,3)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Defines
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,4)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Typedefs
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,5)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Imported Global Variables
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,6)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Global Variables
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,7)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @External Prototypes
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,8)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Prototypes Of Local Functions
-//****************************************************************************
-
-// USER CODE BEGIN (GPT1_General,9)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Function      void GPT1_vInit(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the initialization function of the GPT1 function 
-//                library. It is assumed that the SFRs used by this library 
-//                are in its reset state. 
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (Init,1)
-
-// USER CODE END
+#include <stdlib.h>
 
 void GPT1_vInit(void)
 {
-  // USER CODE BEGIN (Init,2)
-
-  // USER CODE END
-
+ 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the GPT1 Core Timer 3:
   ///  -----------------------------------------------------------------------
@@ -162,8 +41,8 @@ void GPT1_vInit(void)
   ///  - external up/down control is disabled
   ///  - timer 4 run bit is reset
 
-  T4CON          =  0x0000;      // load timer 4 control register
-  T4             =  0x0000;      // load timer 4 register
+  T4CON          =  0x0086;      // load timer 4 control register
+  T4             =  0x9896;      // load timer 4 register
 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the used GPT1 Port Pins:
@@ -178,13 +57,10 @@ void GPT1_vInit(void)
   ///  - timer 2 interrupt group level (GLVL) = 2
 
   T2IC           =  0x006A;     
-
-
-  // USER CODE BEGIN (GPT1_Function,3)
-
-  // USER CODE END
+  T4IC           =  0x0067;     
 
   T2CON_T2R      =  1;           // timer 2 run bit is set
+  T4CON_T4R      =  1;           // timer 4 run bit is set
 
 } 
 
@@ -193,6 +69,16 @@ unsigned int leds; //16 bits on C167
 unsigned char LED_ITERATOR = 0;
 unsigned char brightness = 0;
 unsigned int counter = 0;
+unsigned char selected_animation = 0;
+
+unsigned int animations[4][32] = {
+	{0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA,0x5555,0xAAAA},
+	{0x8000,0x4000,0x2000,0x1000,0x0800,0x0400,0x0200,0x0100,0x0080,0x0040,0x0020,0x0010,0x0008,0x0004,0x0002,0x0001,0x0001,0x0002,0x0004,0x0008,0x0010,0x0020,0x0040,0x0080,0x0100,0x0200,0x0400,0x0800,0x1000,0x2000,0x4000,0x8000},
+	{0x0100,0x0010,0x0002,0x4000,0x8000,0x0001,0x0080,0x0400,0x8000,0x1000,0x0020,0x0800,0x0008,0x0040,0x2000,0x0200,0x0001,0x0010,0x0080,0x0100,0x0010,0x0002,0x4000,0x8000,0x0001,0x0080,0x0400,0x8000,0x1000,0x0020,0x0800,0x0008}
+};
+
+unsigned int current_frame = 0x5555;
+unsigned char current_frame_counter = 0;
 
 extern unsigned char GPT1_getBrightness(void){
 	return brightness;
@@ -204,18 +90,23 @@ extern void GPT1_setBrightness(unsigned char brightness_in) {
 
 void GPT1_viTmr2(void) interrupt T2INT 	{
 	
-	//LED_ITERATOR++;
-	if(LED_ITERATOR++ > 99){
-		LED_ITERATOR = 0;
-		/*counter++;
-		if(counter > 100){
-		 	counter = 0;
-			/*brightness++;
-			if(brightness > 10) brightness = 0;
-		}*/
-	}
+	// increment the LED iterator; when it's too high, reset it
+	if(LED_ITERATOR++ > 99) LED_ITERATOR = 0;
 
-	IO_vWritePort(P2, (LED_ITERATOR>brightness)?(0xFFFF):(0x0F0F));
+	// set the value of P2 (to output to the LEDs) to current frame OR off, depending on where we are in the duty cycle
+	IO_vWritePort(P2, (LED_ITERATOR>brightness)?(0xFFFF):(~current_frame));
+
+	// reset the timer
 	GPT1_TIMER_2 = 0x1;
 
+}
+void GPT1_viTmr4(void) interrupt 0x24 	{
+	if(current_frame_counter++>=31) current_frame_counter = 0;
+	current_frame = animations[selected_animation][current_frame_counter];
+	GPT1_TIMER_4 = 0x0FF0;
+
+}
+
+extern void GPT1_setAnimation(unsigned char anim) {
+	selected_animation = anim;
 }

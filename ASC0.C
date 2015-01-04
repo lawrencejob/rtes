@@ -99,7 +99,7 @@ void ASC0_vInit(void)
 
 void ASC0_vSendData(uword uwData)
 {
-	ready_to_transmit = -1;
+	ready_to_transmit = -01;
 	S0TBUF  = uwData;   //  load transmit buffer register
 
 } //  End of function ASC0_vSendData
