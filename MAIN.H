@@ -1878,53 +1878,6 @@ typedef volatile struct
   unsigned int    bit15     : 1;
 }  T_Reg16;
 
-// USER CODE BEGIN (MAIN_Header,5)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Imported Global Variables
-//****************************************************************************
-
-// USER CODE BEGIN (MAIN_Header,6)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Global Variables
-//****************************************************************************
-
-// USER CODE BEGIN (MAIN_Header,7)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Prototypes Of Global Functions
-//****************************************************************************
-
-
-
-// USER CODE BEGIN (MAIN_Header,8)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Interrupt Vectors
-//****************************************************************************
-
-// USER CODE BEGIN (MAIN_Header,9)
-
-// USER CODE END
-
-
-//****************************************************************************
-// @Project Includes
-//****************************************************************************
-
 #include <Intrins.h>
 
 #include  "IO.H"
@@ -1932,10 +1885,6 @@ typedef volatile struct
 #include  "ASC0.H"
 #include  "GPT1.H"
 #include  "CAN1.H"
-
-// USER CODE BEGIN (MAIN_Header,10)
-
-// USER CODE END
 
 void receiveCurrentBrightness(unsigned char b);
 #endif  // ifndef _MAIN_H_

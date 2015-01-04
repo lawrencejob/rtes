@@ -5,9 +5,6 @@ char ready_to_transmit = 0, input_ready = -1;
 
 void ASC0_vInit(void)
 {
-  // USER CODE BEGIN (Init,2)
-
-  // USER CODE END
 
   ///  -----------------------------------------------------------------------
   ///  Configuration of the ASC0 Baud Rate Generator:
@@ -52,210 +49,67 @@ void ASC0_vInit(void)
 
   S0TBIC         =  0x0061;     
 
-  ///  - receive service request node configuration:
-  ///  - receive interrupt priority level (ILVL) = 9
-  ///  - receive interrupt group level (GLVL) = 1
-
   S0RIC          =  0x0065;     
-
-
-  // USER CODE BEGIN (ASC0_Function,3)
-
-  // USER CODE END
 
   S0CON         |=  0x8000;      // enable baud rate generator
 
 
-} //  End of function ASC0_vInit
-
-
-//****************************************************************************
-// @Function      void ASC0_vSendData(uword uwData) 
-//
-//----------------------------------------------------------------------------
-// @Description   This function writes a send data initialization word into 
-//                the S0TBUF register.
-//                
-//                Note: 
-//                In a multiprocessor system the master with this function 
-//                has the possibility to send data to the selected slave. To 
-//                achieve this, the 9th bit must set on zero.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    uwData: 
-//                Data to be send
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (SendData,1)
-
-// USER CODE END
+} 
 
 void ASC0_vSendData(uword uwData)
 {
+	// set flag to show that the serial tools abstraction layer cannot send any more data for now
 	ready_to_transmit = -1;
-	S0TBUF  = uwData;   //  load transmit buffer register
 
-} //  End of function ASC0_vSendData
+	// actually put the byte to be set into the transmit buffer
+	S0TBUF  = uwData;
 
+} 
 
+// get byte from the buffer
 uword ASC0_uwGetData(void)
 {
-  input_ready = -1;
-  return(S0RBUF);     // return receive buffer register
+	// set input_ready to show that the byte has been read - used by the serial tools abstraction layer
+	input_ready = -1;
+	
+	// return receive buffer register
+	return(S0RBUF);
+} 
 
-} //  End of function ASC0_uwGetData
-
-
-//****************************************************************************
-// @Function      void ASC0_viTx(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the transmit interrupt service routine for the 
-//                ASC0. It is called when the sending of data is terminated 
-//                (S0TIR is set). 
-//                Please note that you have to add application specific code 
-//                to this function.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-
+// interrupt for when data has been transmitted. currently not used
 void ASC0_viTx(void) interrupt S0TINT
 {
-
-
-
-} //  End of function ASC0_viTx
-
-
-//****************************************************************************
-// @Function      void ASC0_viRx(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the receive interrupt service routine for the ASC0. 
-//                It is called if a byte has been received via ASC0 (S0RIR is 
-//                set). 
-//                Please note that you have to add application specific code 
-//                to this function.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (Rx,1)
-
-// USER CODE END
-
-
-
-
-//****************************************************************************
-// @Function      void ASC0_viTxBuf(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This is the transmit buffer interrupt service routine for 
-//                the ASC0. It is called if the content of the TX-buffer has 
-//                been loaded into the TX-shift register.
-//                Please note that you have to add application specific code 
-//                to this function.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (TxBuf,1)
-
-// USER CODE END
+	
+}
 
 void ASC0_viTxBuf(void) interrupt S0TBINT
 {
-	ready_to_transmit = 0x00;	
-  
+	// reset flag to show that the board is ready to transmit
+	ready_to_transmit = 0;
+} 
 
-} //  End of function ASC0_viTxBuf
-
-extern char ASC0_cReadyToTransmit(void) {
+// return flag that shows if ready to send data
+char ASC0_cReadyToTransmit(void) {
 	return ready_to_transmit;
 }
 
-
-//****************************************************************************
-// @Function      void ASC0_vReceiverOn(void) 
-//
-//----------------------------------------------------------------------------
-// @Description   This function releases the receive function of the ASC0. 
-//                After initialization this function does not need to be 
-//                recalled. 
-//                Note: 
-//                The following function must be called everytime data is to 
-//                be received in synchronous mode.
-//
-//----------------------------------------------------------------------------
-// @Returnvalue   None
-//
-//----------------------------------------------------------------------------
-// @Parameters    None
-//
-//----------------------------------------------------------------------------
-// @Date          05/12/2014
-//
-//****************************************************************************
-
-// USER CODE BEGIN (ReceiverOn,1)
-
-// USER CODE END
-
+// generated by DAvE
 void ASC0_vReceiverOn(void)
 {
   S0CON_S0REN = 1;               // enable the receiver
+} 
 
-} //  End of function ASC0_vReceiverOn
-
-
-
-extern char ASC0_cReadyToReceive(void) {
+char ASC0_cReadyToReceive(void) {
+	// return whether there is an input waiting to be processed from serial
 	return input_ready;
 }
 
 void ASC0_viRx(void) interrupt S0RINT
 {
+	// reset flag to show program if there is an input waiting to be processed
 	input_ready = 0;
+
+	// debug: show the value being sent over serial on LEDs
 	IO_vWritePort(P2, S0RBUF);
 
-} //  End of function ASC0_viRx
-
-
-
-// USER CODE BEGIN (ASC0_General,10)
-
-// USER CODE END
-
+} 

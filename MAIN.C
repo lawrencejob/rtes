@@ -15,7 +15,7 @@ void sendCurrentAnimation(void);
 unsigned char current_brightness = 0, current_animation = 0;
 
 #define BRIGHTNESS_INCREMENT 5
-#define BRIGHTNESS_MAX 100
+#define BRIGHTNESS_MAX 100						  
 #define ANIMATION_MAX 3
 
 void MAIN_vInit(void)
@@ -221,6 +221,7 @@ void drawAnimationScreen(void) {
 	// send 'tab' symbol
 	sendString("\t");
 
+	// draw the currently selected animation on the screen
 	sendString("< ");
 	sendString(animation_names[current_animation]);
 	sendString(" > ");
@@ -230,6 +231,7 @@ void drawAnimationScreen(void) {
 
 
 void sendCurrentAnimation(void) {
+	// send a signal to the other board with opcode 2 and the value of current_animation
 	CAN1_SendShort(2,current_animation);
 }
 
